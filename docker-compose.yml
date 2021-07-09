@@ -1,14 +1,7 @@
-version: "1.0"
+version: '3'
+
 services:
-  dev:
-    links: 
-      -mysql
-      
-  mysql:
-    image: 
-    ports:
-    - 5002:5002
-    environment:
-      MYSQLITE_DB: goDB
-      MYSQLITE_USER: root
-      MYSQLITE_PASSWORD: secret
+    goapi:
+        build: .
+        ports:
+            - "5001:5002"
