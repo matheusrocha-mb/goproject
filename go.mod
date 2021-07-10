@@ -1,4 +1,4 @@
-module goproject
+module github.com/matheusrocha-mb/goproject
 
 go 1.16
 

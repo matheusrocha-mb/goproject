@@ -5,3 +5,20 @@ services:
         build: .
         ports:
             - "5001:5002"
+        networks: 
+            - rocky-network
+    postgres:
+        image: postgres:latest
+        ports:
+        - 5432:5432
+        environment:
+            POSTGRES_DB: rocky_db
+            POSTGRES_USER: root
+            POSTGRES_PASSWORD: root
+        networks: 
+            - rocky-network
+
+networks:
+    rocky-network:
+        driver: bridge
+
