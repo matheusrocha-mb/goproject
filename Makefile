@@ -1,13 +1,13 @@
 go-build:
 	go build -o rock3 main.go && cp rock3 ~/go/bin && rm rock3
 
-rock-build:
+rocky-build:
 	docker-compose build
 
-rock-start:
+rocky-start:
 	docker-compose up -d
 
-rock-down:
+rocky-down:
 	docker-compose down -v --remove-orphans
 
 go-run:

@@ -5,20 +5,19 @@ services:
         build: .
         ports:
             - "5001:5002"
-        networks: 
-            - rocky-network
+        links: 
+            - postgres
+        container_name: rocky3_server
+
     postgres:
         image: postgres:latest
         ports:
         - 5432:5432
         environment:
-            POSTGRES_DB: rocky_db
-            POSTGRES_USER: root
-            POSTGRES_PASSWORD: root
-        networks: 
-            - rocky-network
+            POSTGRES_DB: 'mak'
+            POSTGRES_USER: 'root'
+            POSTGRES_PASS: 'root'
+            POSTGRES_HOST_AUTH_METHOD: 'trust'
 
-networks:
-    rocky-network:
-        driver: bridge
+        container_name: mak_db
 
