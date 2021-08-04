@@ -7,17 +7,27 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/matheusrocha-mb/goproject/internal/database"
-	"github.com/matheusrocha-mb/goproject/main.go"
 	"github.com/gorilla/mux"
 )
 
-
-
-const SERVER_LOCAL_PORT = 5002
-const SERVER_CONTAINER_PORT = 5001
 const RANDOM_NUMBER_RANGE = 999999999999999999
 
+type Wallet struct {
+	ID    string `json:"id"`
+	Asset *Asset `json:"asset"`
+}
+type Asset struct {
+	Hash    string  `json:"hashid"`
+	Balance float64 `json:"balance"`
+}
+
+var wallets []Wallet
+
+func FakeDB() {
+	wallets = append(wallets, Wallet{ID: "1", Asset: &Asset{Hash: "4e8sES76EAS", Balance: 3.14}})
+	wallets = append(wallets, Wallet{ID: "2", Asset: &Asset{Hash: "4e8sES79PKE", Balance: 200.14}})
+
+}
 
 func CreateWallet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content Type", "application/json")
