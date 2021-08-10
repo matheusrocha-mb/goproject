@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package wallet_manager;
+
+option go_package = "pkg/;wlt";
+
+service WalletManager {
+    rpc ManagerWallet (WalletRequest) returns (WalletReply) {}
+    rpc ManagerAsset (AssetRequest) returns (AssetReply) {}
+}
+
+message WalletRequest {
+    string method = 1;
+    repeated modelWallet wallet = 2;
+}
+
+message WalletReply {
+    repeated modelWalletReply wallet = 1;
+}
+
+message AssetRequest {
+    string method = 1;
+    repeated modelAsset asset = 2;
+}
+
+message AssetReply {
+    repeated modelAssetReply asset = 1;
+}
+
+message modelWallet {
+    string id = 1;
+    string userName = 2;
+    string created_at = 3;
+    string updated_at = 4;
+    repeated modelAsset assets = 5;
+}
+
+message modelWalletReply {
+    string rows_affected = 2;
+    string error = 3;
+}
+
+message modelAsset {
+    string hashId = 1;
+    string balance = 2;
+    string included_at = 3;
+    string updated_at = 4;
+}
+
+message modelAssetReply {
+    string rows_affected = 2;
+    string error = 3;
+}
