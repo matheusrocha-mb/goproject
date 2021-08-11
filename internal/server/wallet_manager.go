@@ -1,37 +1,59 @@
-package handlers
+package server
 
 import (
-	"encoding/json"
-	"fmt"
-	"math/rand"
-	"net/http"
-	"strconv"
+	"context"
 
-	"github.com/gorilla/mux"
+	"github.com/matheusrocha-mb/goproject/internal/database"
+	wlt "github.com/matheusrocha-mb/goproject/pkg"
+	log "github.com/sirupsen/logrus"
 )
 
-const RANDOM_NUMBER_RANGE = 999999999999999999
+type ManagerWalletOp func(s *Server, cast database.Wallet) (*wlt.ModelWalletReply, error)
 
-type Wallet struct {
-	ID    string `json:"id"`
-	Asset *Asset `json:"asset"`
-}
-type Asset struct {
-	Hash    string  `json:"hashid"`
-	Balance float64 `json:"balance"`
+var walletOption = map[string]ManagerWalletOp{
+	"CREATE": WalletCreate,
+	"READ":   WalletRead,
+	"DELETE": WalletDelete,
+	"UPDATE": WalletUpdate,
 }
 
-var wallets []Wallet
+func (s *Server) ManagerWallet(ctx context.Context, input *wlt.WalletRequest) (*wlt.ModelWalletReply, error) {
+	log.Info("Start Manage function...")
 
-func FakeDB() {
-	wallets = append(wallets, Wallet{ID: "1", Asset: &Asset{Hash: "4e8sES76EAS", Balance: 3.14}})
-	wallets = append(wallets, Wallet{ID: "2", Asset: &Asset{Hash: "4e8sES79PKE", Balance: 200.14}})
+	results := wlt.ModelWalletReply{}
 
+	return &results, nil
 }
 
+func WalletCreate(s *Server, cast database.Wallet) (*wlt.ModelWalletReply, error) {
+	var result *wlt.ModelWalletReply
+	//	var d database.Wallet
+
+	return result, nil
+}
+
+func WalletRead(s *Server, cast database.Wallet) (*wlt.ModelWalletReply, error) {
+	var result *wlt.ModelWalletReply
+
+	return result, nil
+}
+
+func WalletUpdate(s *Server, cast database.Wallet) (*wlt.ModelWalletReply, error) {
+	var result *wlt.ModelWalletReply
+
+	return result, nil
+}
+
+func WalletDelete(s *Server, cast database.Wallet) (*wlt.ModelWalletReply, error) {
+	var result *wlt.ModelWalletReply
+
+	return result, nil
+}
+
+/*
 func CreateWallet(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content Type", "application/json")
-	var wallet Wallet
+	var wallet database.Wallet
 	_ = json.NewDecoder(r.Body).Decode(&wallet)
 	wallet.ID = strconv.Itoa(rand.Intn(RANDOM_NUMBER_RANGE))
 	wallets = append(wallets, wallet)
@@ -82,3 +104,4 @@ func DeleteWallet(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 }
+*/

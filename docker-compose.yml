@@ -16,8 +16,7 @@ services:
         environment:
             POSTGRES_DB: 'mak'
             POSTGRES_USER: 'root'
-            POSTGRES_PASS: 'root'
-            POSTGRES_HOST_AUTH_METHOD: 'trust'
+            POSTGRES_PASSWORD: 'root'
 
         container_name: mak_db
 

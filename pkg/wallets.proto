@@ -6,7 +6,6 @@ option go_package = "pkg/;wlt";
 
 service WalletManager {
     rpc ManagerWallet (WalletRequest) returns (WalletReply) {}
-    rpc ManagerAsset (AssetRequest) returns (AssetReply) {}
 }
 
 message WalletRequest {
@@ -18,36 +17,19 @@ message WalletReply {
     repeated modelWalletReply wallet = 1;
 }
 
-message AssetRequest {
-    string method = 1;
-    repeated modelAsset asset = 2;
-}
-
-message AssetReply {
-    repeated modelAssetReply asset = 1;
-}
-
 message modelWallet {
     string id = 1;
-    string userName = 2;
-    string created_at = 3;
-    string updated_at = 4;
-    repeated modelAsset assets = 5;
+    string userId = 2;
+    string userName = 3;
+    string asset_tag = 4;
+    string asset_name = 5;
+    string hash = 6;
+    string balance = 7;
+    string created_at = 8;
+    string updated_at = 9;
 }
 
 message modelWalletReply {
-    string rows_affected = 2;
-    string error = 3;
-}
-
-message modelAsset {
-    string hashId = 1;
-    string balance = 2;
-    string included_at = 3;
-    string updated_at = 4;
-}
-
-message modelAssetReply {
     string rows_affected = 2;
     string error = 3;
 }

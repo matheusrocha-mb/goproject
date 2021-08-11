@@ -19,7 +19,6 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type WalletManagerClient interface {
 	ManagerWallet(ctx context.Context, in *WalletRequest, opts ...grpc.CallOption) (*WalletReply, error)
-	ManagerAsset(ctx context.Context, in *AssetRequest, opts ...grpc.CallOption) (*AssetReply, error)
 }
 
 type walletManagerClient struct {
@@ -39,21 +38,11 @@ func (c *walletManagerClient) ManagerWallet(ctx context.Context, in *WalletReque
 	return out, nil
 }
 
-func (c *walletManagerClient) ManagerAsset(ctx context.Context, in *AssetRequest, opts ...grpc.CallOption) (*AssetReply, error) {
-	out := new(AssetReply)
-	err := c.cc.Invoke(ctx, "/wallet_manager.WalletManager/ManagerAsset", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // WalletManagerServer is the server API for WalletManager service.
 // All implementations must embed UnimplementedWalletManagerServer
 // for forward compatibility
 type WalletManagerServer interface {
 	ManagerWallet(context.Context, *WalletRequest) (*WalletReply, error)
-	ManagerAsset(context.Context, *AssetRequest) (*AssetReply, error)
 	mustEmbedUnimplementedWalletManagerServer()
 }
 
@@ -63,9 +52,6 @@ type UnimplementedWalletManagerServer struct {
 
 func (UnimplementedWalletManagerServer) ManagerWallet(context.Context, *WalletRequest) (*WalletReply, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ManagerWallet not implemented")
-}
-func (UnimplementedWalletManagerServer) ManagerAsset(context.Context, *AssetRequest) (*AssetReply, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ManagerAsset not implemented")
 }
 func (UnimplementedWalletManagerServer) mustEmbedUnimplementedWalletManagerServer() {}
 
@@ -98,24 +84,6 @@ func _WalletManager_ManagerWallet_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _WalletManager_ManagerAsset_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(AssetRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(WalletManagerServer).ManagerAsset(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/wallet_manager.WalletManager/ManagerAsset",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(WalletManagerServer).ManagerAsset(ctx, req.(*AssetRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // WalletManager_ServiceDesc is the grpc.ServiceDesc for WalletManager service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -126,10 +94,6 @@ var WalletManager_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ManagerWallet",
 			Handler:    _WalletManager_ManagerWallet_Handler,
-		},
-		{
-			MethodName: "ManagerAsset",
-			Handler:    _WalletManager_ManagerAsset_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
