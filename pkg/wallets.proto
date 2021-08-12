@@ -30,6 +30,7 @@ message modelWallet {
 }
 
 message modelWalletReply {
-    string rows_affected = 2;
-    string error = 3;
+    modelWallet data = 2;
+    string rows_affected = 3;
+    string error = 4;
 }
